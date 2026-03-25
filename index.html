@@ -305,13 +305,16 @@ document.addEventListener('click',function(e){
   var kw='';
   try{kw=new URL(a.href).searchParams.get('keyword')||'';}catch(x){}
   var ekw=encodeURIComponent(kw);
-  var timer=setTimeout(function(){
-    window.location.href='https://maps.apple.com/?q='+encodeURIComponent(kw+' 上海');
-  },800);
+  var opened=false;
+  function onHide(){opened=true;document.removeEventListener('visibilitychange',onHide);}
+  document.addEventListener('visibilitychange',onHide);
   window.location.href='iosamap://search?keyword='+ekw+'&city=上海&dev=0';
-  document.addEventListener('visibilitychange',function h(){
-    if(document.hidden){clearTimeout(timer);document.removeEventListener('visibilitychange',h);}
-  });
+  setTimeout(function(){
+    document.removeEventListener('visibilitychange',onHide);
+    if(!opened&&!document.hidden){
+      window.location.href='https://maps.apple.com/?q='+encodeURIComponent(kw+' 上海');
+    }
+  },2000);
 });
 
 function toggleKeys(){
