@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shanghai: Hotelex 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#faf8f5;color:#1a1a1a;line-height:1.55;padding:16px;max-width:480px;margin:0 auto;-webkit-font-smoothing:antialiased}
+h1{font-family:'DM Serif Display',serif;font-size:1.6em;margin-bottom:2px;font-weight:400;letter-spacing:-.02em;color:#1a1a1a}
+.sub{color:#8a8178;font-size:.82em;margin-bottom:16px;letter-spacing:.01em}
+
+/* Key info cards */
+.keys{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.key{background:#fff;border-radius:12px;padding:13px 15px;border:1px solid #ece8e1;font-size:.88em}
+.key .lbl{font-size:.68em;text-transform:uppercase;letter-spacing:.08em;color:#b8860b;font-weight:700;margin-bottom:3px}
+.key .val{font-weight:700;color:#1a1a1a}
+.key .zh{color:#5a5347;font-size:.93em;margin-top:3px}
+.key .det{color:#8a8178;font-size:.84em;margin-top:2px}
+.book{color:#c0392b!important;font-weight:700}
+
+/* Day selector */
+.day-sel{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 0 12px;margin-bottom:4px;scrollbar-width:none}
+.day-sel::-webkit-scrollbar{display:none}
+.day-btn{flex-shrink:0;background:#ece8e1;border:none;padding:9px 14px;border-radius:22px;font-size:.78em;font-weight:500;color:#6b6259;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all .15s ease}
+.day-btn.active{background:#1a1a1a;color:#faf8f5}
+
+/* Day content */
+.day-view{display:none}
+.day-view.active{display:block}
+.day-title{font-family:'DM Serif Display',serif;font-size:1.15em;font-weight:400;margin-bottom:12px;color:#1a1a1a;letter-spacing:-.01em}
+
+/* Activity rows */
+.act{display:grid;grid-template-columns:48px 1fr auto;padding:11px 0;border-bottom:1px solid #ece8e1;gap:6px;align-items:start}
+.act:last-child{border-bottom:none}
+.act .t{font-weight:700;font-size:.8em;color:#1a1a1a;padding-top:1px;font-variant-numeric:tabular-nums}
+.act .n{font-weight:700;font-size:.87em;color:#1a1a1a}
+.act .d{font-size:.79em;color:#6b6259;margin-top:2px;line-height:1.45}
+.act .l{font-size:.74em;color:#8a8178;margin-top:2px}
+.act .p{font-size:.74em;color:#8a8178;text-align:right;white-space:nowrap;padding-top:1px;font-variant-numeric:tabular-nums}
+
+/* Category pills */
+.c{display:inline-block;font-size:.62em;padding:2px 7px;border-radius:6px;font-weight:700;margin-left:5px;vertical-align:middle;letter-spacing:.02em;text-transform:uppercase}
+.cc{background:#f2ddd5;color:#8b3a2a}
+.cf{background:#f5ead0;color:#7a6520}
+.cs{background:#d4e5f0;color:#2a5070}
+.cx{background:#e4d5ee;color:#5a3478}
+.ct{background:#d8e8d2;color:#2a6030}
+.ck{background:#f5e2c8;color:#7a4a18}
+.cn{background:#dfd0e8;color:#5a3478}
+.cm{background:#c8e6d0;color:#2a6030}
+.cb{background:#f0dcc0;color:#6a4012}
+
+/* Pick-one group */
+.pick{margin:8px 0;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #ece8e1}
+.pick-hdr{padding:9px 14px;font-weight:700;font-size:.78em;color:#b8860b;background:#f7f2ea;letter-spacing:.02em;text-transform:uppercase}
+.pick .act{padding:9px 14px;border-bottom:1px solid #f2ede6}
+.pick .act:last-child{border-bottom:none}
+
+/* Highlight row */
+.hl{background:#ede5f5;border-radius:10px;padding:11px 14px!important;margin:8px 0}
+
+.note{font-size:.76em;color:#8a8178;margin-bottom:12px}
+
+@media(min-width:500px){body{max-width:520px;padding:24px}}
+</style>
+</head>
+<body>
+
+<h1>Shanghai: Hotelex 2026</h1>
+<p class="sub">Mar 26 - Apr 5 &nbsp;|&nbsp; Blank Street (2-3 pax)</p>
+
+<div class="keys">
+  <div class="key">
+    <div class="lbl">Hotel</div>
+    <div class="val">Hualuxe Twelve at Hengshan</div>
+    <div class="zh">请到华邑酒店，衡山路12号，徐汇区</div>
+    <div class="det">+86-21-33383888</div>
+  </div>
+  <div class="key">
+    <div class="lbl">Conference &nbsp; Mar 30 - Apr 2</div>
+    <div class="val">NECC (Hotelex)</div>
+    <div class="zh">请到国家会展中心，崧泽大道333号，青浦区</div>
+    <div class="det">~1hr from hotel (Line 10 > Line 2)</div>
+  </div>
+  <div class="key">
+    <div class="lbl">Flights</div>
+    <div class="val">BA 169 out (Mar 26, 12:15) &nbsp;|&nbsp; BA 168 back (Apr 5, ~11:00)</div>
+    <div class="zh">请到浦东国际机场</div>
+  </div>
+</div>
+
+<p class="note"><span class="book">BOOK AHEAD</span> = needs reservation. Prices in GBP.</p>
+
+<div class="day-sel" id="daysel">
+  <button class="day-btn active" onclick="showDay(1)">Thu 26</button>
+  <button class="day-btn" onclick="showDay(2)">Fri 27</button>
+  <button class="day-btn" onclick="showDay(3)">Sat 28</button>
+  <button class="day-btn" onclick="showDay(4)">Sun 29</button>
+  <button class="day-btn" onclick="showDay(5)">Mon 30</button>
+  <button class="day-btn" onclick="showDay(6)">Tue 31</button>
+  <button class="day-btn" onclick="showDay(7)">Wed 1</button>
+  <button class="day-btn" onclick="showDay(8)">Thu 2</button>
+  <button class="day-btn" onclick="showDay(9)">Fri 3</button>
+  <button class="day-btn" onclick="showDay(10)">Sat 4</button>
+  <button class="day-btn" onclick="showDay(11)">Sun 5</button>
+</div>
+
+<!-- DAY 1 -->
+<div class="day-view active" id="d1">
+<div class="day-title">Thu Mar 26 - Travel</div>
+<div class="act"><div class="t">12:15</div><div><div class="n">Depart LHR <span class="c ct">Travel</span></div><div class="d">BA 169 to Shanghai. ~11hr flight.</div></div><div class="p"></div></div>
+</div>
+
+<!-- DAY 2 -->
+<div class="day-view" id="d2">
+<div class="day-title">Fri Mar 27 - Arrival + French Concession</div>
+<div class="act"><div class="t">08:00</div><div><div class="n">Land at PVG <span class="c ct">Travel</span></div><div class="d">Grab transit card. Taxi/Maglev to hotel (~1hr).</div></div><div class="p"></div></div>
+<div class="act"><div class="t">10:00</div><div><div class="n">Check in at Hualuxe <span class="c ct">Travel</span></div><div class="d">Drop bags, freshen up.</div></div><div class="p"></div></div>
+<div class="act"><div class="t">11:00</div><div><div class="n">Manner Coffee <span class="c cc">Coffee</span></div><div class="d">1,000+ Shanghai locations. Tiny footprint, high throughput. Direct BS comp.</div><div class="l">Wukang Road area</div></div><div class="p">&pound;2-3</div></div>
+<div class="act"><div class="t">11:30</div><div><div class="n">Xiao Yang Sheng Jian <span class="c cf">Food</span></div><div class="d">First meal = Shanghai's signature. Pan-fried soup dumplings, crispy bottom.</div><div class="l">Near Wukang Rd</div></div><div class="p">&pound;2-3</div></div>
+<div class="act"><div class="t">12:30</div><div><div class="n">Starbucks Reserve Roastery <span class="c cc">Coffee</span></div><div class="d">World's largest Starbucks (2,700 sqm). 40-ton copper cask. Retail theater.</div><div class="l">Nanjing West Rd 789</div></div><div class="p">&pound;4-9</div></div>
+<div class="act"><div class="t">14:00</div><div><div class="n">Walk Wukang + Anfu Road <span class="c cs">Sightseeing</span></div><div class="d">Tree-lined streets, Art Deco mansions. Perfect first-day intro.</div></div><div class="p">Free</div></div>
+<div class="act"><div class="t">14:30</div><div><div class="n">Saturnbird Into the Force <span class="c cc">Coffee</span></div><div class="d">China's coolest instant coffee brand gone physical. First offline store.</div><div class="l">Anfu Rd 322</div></div><div class="p">&pound;3-6</div></div>
+<div class="act"><div class="t">15:15</div><div><div class="n">%Arabica <span class="c cc">Coffee</span></div><div class="d">Kyoto-born, exploded in China. Minimalist, Instagram magnet.</div><div class="l">Near Wukang Mansion</div></div><div class="p">&pound;4-6</div></div>
+<div class="act"><div class="t">15:45</div><div><div class="n">O.P.S Cafe <span class="c cc">Coffee</span></div><div class="d">TikTok viral. No menu - 5 seasonal drinks, rotates every 4 months. No seating.</div><div class="l">Taiyuan Rd 177 Long No.1</div></div><div class="p">&pound;3-7</div></div>
+<div class="act"><div class="t">16:15</div><div><div class="n">Heytea Lab 2.0 <span class="c ck">Tech</span></div><div class="d">China's first Lab 2.0 (Feb 2026). 4 labs: tea, cake, gelato, bake.</div><div class="l">Fengshengli (FC)</div></div><div class="p">&pound;3-7</div></div>
+<div class="act"><div class="t">17:00</div><div><div class="n">Gentle Monster HAUS NOWHERE <span class="c ck">Tech</span></div><div class="d">Eyewear, Tamburins fragrance, Nudake desserts. Future retail. 3,270 sqm.</div><div class="l">798-812 Huaihai Mid Rd</div></div><div class="p">Free</div></div>
+<div class="act"><div class="t">18:00</div><div><div class="n">Nudake dessert cafe <span class="c cf">Food</span></div><div class="d">Gentle Monster's surreal dessert brand. Croissant gym theme.</div><div class="l">Inside HAUS NOWHERE</div></div><div class="p">&pound;4-9</div></div>
+<div class="pick"><div class="pick-hdr">DINNER - FC area, pick one</div>
+<div class="act"><div class="t">19:00</div><div><div class="n">Old Jesse (Lao Ji Shi)</div><div class="d">3x Dianping Must-Eat. Classic Shanghainese. Red-braised pork. <span class="book">BOOK AHEAD</span></div><div class="l">Tianping Rd, FC</div></div><div class="p">&pound;11-22pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Jian Guo 328</div><div class="d">No-frills Shanghainese legend. Smoked fish. Cash only.</div><div class="l">Jianguo West Rd</div></div><div class="p">&pound;7-11pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">People 6 (secret)</div><div class="d">Hidden entrance, scan code. Great value set menus.</div><div class="l">French Concession</div></div><div class="p">&pound;6-14pp</div></div>
+</div>
+<div class="pick"><div class="pick-hdr">DRINKS - FC, pick one</div>
+<div class="act"><div class="t">21:30</div><div><div class="n">Speak Low <span class="c cb">Bar</span></div><div class="d">Asia's 50 Best. Speakeasy behind bookshelf. 3 floors. <span class="book">BOOK AHEAD</span></div><div class="l">Fuxing Rd, FC</div></div><div class="p">&pound;10-12</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Flask <span class="c cb">Bar</span></div><div class="d">Hidden behind a Coca-Cola vending machine. Dark, sleek.</div><div class="l">Yongfu Rd, FC</div></div><div class="p">&pound;8-11</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Epic <span class="c cb">Bar</span></div><div class="d">3-storey cocktail bar. Terrace on top floor.</div><div class="l">FC</div></div><div class="p">&pound;10-12</div></div>
+</div>
+</div>
+
+<!-- DAY 3 -->
+<div class="day-view" id="d3">
+<div class="day-title">Sat Mar 28 - Coffee Deep Dive + Bund + INS</div>
+<div class="act"><div class="t">10:00</div><div><div class="n">Morning coffee <span class="c cc">Coffee</span></div><div class="d">Seesaw Coffee or Manner on Wukang/Hengshan Rd.</div><div class="l">French Concession</div></div><div class="p">&pound;3-5</div></div>
+<div class="act"><div class="t">10:45</div><div><div class="n">M Stand flagship <span class="c cc">Coffee</span></div><div class="d">Shanghai-born industrial-chic. Cement latte, coconut latte.</div><div class="l">Jianguo Rd W</div></div><div class="p">&pound;3-5</div></div>
+<div class="act"><div class="t">11:30</div><div><div class="n">Blue Bottle Coffee <span class="c cc">Coffee</span></div><div class="d">California third-wave adapted for China. Neri&amp;Hu-designed.</div><div class="l">Jing'an Kerry / Zhangyuan</div></div><div class="p">&pound;4-6</div></div>
+<div class="act"><div class="t">12:00</div><div><div class="n">COFE+ Robot Kiosk <span class="c ck">Tech</span></div><div class="d">6th-gen AI robot. 50 sec/drink. 300+ SKUs. Fully automated.</div><div class="l">Nanjing Road area</div></div><div class="p">&pound;1-3</div></div>
+<div class="act"><div class="t">12:30</div><div><div class="n">Lai Lai Xiao Long <span class="c cf">Food</span></div><div class="d">Bib Gourmand. Crab roe XLB. Tiny spot, always packed, worth the queue.</div><div class="l">Near Nanjing Dong Lu</div></div><div class="p">&pound;3-7</div></div>
+<div class="act"><div class="t">14:30</div><div><div class="n">The Bund waterfront walk <span class="c cs">Sightseeing</span></div><div class="d">Colonial architecture one side, Pudong skyline the other.</div><div class="l">The Bund (Waitan)</div></div><div class="p">Free</div></div>
+<div class="act"><div class="t">15:00</div><div><div class="n">Manner Coffee (Oriental Pearl) <span class="c cc">Coffee</span></div><div class="d">Flagship at the tower. High-traffic model.</div><div class="l">Lujiazui, Pudong</div></div><div class="p">&pound;2-3</div></div>
+<div class="act"><div class="t">15:30</div><div><div class="n">Luckin Coffee (Lujiazui) <span class="c cc">Coffee</span></div><div class="d">30,000+ stores. China's #1. Library-design flagship.</div><div class="l">Lujiazui area</div></div><div class="p">&pound;1-2</div></div>
+<div class="act"><div class="t">16:30</div><div><div class="n">Shanghai Tower observation <span class="c cs">Sightseeing</span></div><div class="d">World's highest deck (560m). Book on Klook. Passport needed.</div><div class="l">Lujiazui, Pudong</div></div><div class="p">&pound;20</div></div>
+<div class="pick"><div class="pick-hdr">DINNER - Bund area, pick one</div>
+<div class="act"><div class="t">18:30</div><div><div class="n">Xiao Da Dong (Peking Duck)</div><div class="d">Da Dong's fast-casual format. Same great duck, no fuss.</div><div class="l">Bund area</div></div><div class="p">&pound;9-17pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Lost Heaven (Yunnan)</div><div class="d">Ethnic minority cuisine. Beautiful Bund location.</div><div class="l">The Bund</div></div><div class="p">&pound;22-39pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">San Ma Lu Jiu Jia</div><div class="d">28-year Shanghainese legend. Casual, great value.</div><div class="l">Off Nanjing Rd</div></div><div class="p">&pound;7-11pp</div></div>
+</div>
+<div class="act"><div class="t">20:30</div><div><div class="n">Back to hotel</div><div class="d">Taxi from Bund ~30 min. Freshen up, change for going out.</div></div><div class="p"></div></div>
+<div class="act hl"><div class="t">22:30</div><div><div class="n">INS Land <span class="c cn">Nightlife</span></div><div class="d">7 floors, 20+ venues. Hip-hop to techno. Entry = 10 clubs + free drinks. 5 min from hotel.</div><div class="l">Fuxing Park</div></div><div class="p">&pound;32</div></div>
+</div>
+
+<!-- DAY 4 -->
+<div class="day-view" id="d4">
+<div class="day-title">Sun Mar 29 - Slow Start + Old Shanghai</div>
+<div class="act"><div class="t">11:30</div><div><div class="n">Late morning coffee <span class="c cc">Coffee</span></div><div class="d">Slow start after INS. Cunkou Dashu or YEAST Coffee, both walkable.</div><div class="l">French Concession</div></div><div class="p">&pound;3-6</div></div>
+<div class="act"><div class="t">12:15</div><div><div class="n">Captain George Flavor Museum <span class="c cc">Coffee</span></div><div class="d">2025 World Coffee Roasting Champion. 3 zones: lounge, retail, brewing.</div><div class="l">Taiyuan Rd 236</div></div><div class="p">&pound;4-9</div></div>
+<div class="act"><div class="t">13:00</div><div><div class="n">Ear-Slap Wonton (Erguang Huntun) <span class="c cf">Food</span></div><div class="d">Famous Shanghai wonton. Alkaline skin, pork + shepherd's purse. Queue-worthy.</div><div class="l">Jing'an / multiple</div></div><div class="p">&pound;2-3</div></div>
+<div class="act"><div class="t">14:00</div><div><div class="n">Yu Garden (Yuyuan) <span class="c cs">Sightseeing</span></div><div class="d">400-year-old classical Chinese garden. 20,000 sqm.</div><div class="l">Old City, Huangpu</div></div><div class="p">&pound;4</div></div>
+<div class="act"><div class="t">14:45</div><div><div class="n">Ningbo Tangyuan at Yuyuan <span class="c cf">Food</span></div><div class="d">Sweet sesame + savoury pork tangyuan (rice balls). Classic Shanghai.</div><div class="l">Yuyuan Bazaar</div></div><div class="p">&pound;2-4</div></div>
+<div class="act"><div class="t">15:30</div><div><div class="n">Yuyuan Bazaar street food <span class="c cf">Food</span></div><div class="d">Scallion pancakes, stinky tofu, tanghulu. Graze as you walk.</div><div class="l">Yuyuan Bazaar</div></div><div class="p">&pound;3-9</div></div>
+<div class="act"><div class="t">16:15</div><div><div class="n">Metal Hands Coffee <span class="c cc">Coffee</span></div><div class="d">#38 world's Top 50. Industrial design. Cinnamon egg latte.</div><div class="l">Nanchang Rd 234</div></div><div class="p">&pound;3-6</div></div>
+<div class="act"><div class="t">17:00</div><div><div class="n">Tianzifang lanes <span class="c cs">Sightseeing</span></div><div class="d">Shikumen alleys turned art/cafe district. Gifts.</div><div class="l">Taikang Road</div></div><div class="p">Free</div></div>
+<div class="act"><div class="t">17:30</div><div><div class="n">Matcha Wang <span class="c cm">Matcha</span></div><div class="d">Viral cutest matcha latte. Pick intensity. Sheep art.</div><div class="l">Huaihai Road</div></div><div class="p">&pound;3-4</div></div>
+<div class="act"><div class="t">18:00</div><div><div class="n">Shanghai Greenhouse Garden <span class="c cs">Sightseeing</span></div><div class="d">22,000 sqm glass botanical complex.</div><div class="l">Expo Culture Park</div></div><div class="p">&pound;3-6</div></div>
+<div class="pick"><div class="pick-hdr">DINNER - pick one</div>
+<div class="act"><div class="t">19:30</div><div><div class="n">Dashu Restaurant</div><div class="d">3x Dianping Must-Eat + LV City Guide. Bread curry chicken.</div></div><div class="p">&pound;17-28pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">San Ma Lu Jiu Jia</div><div class="d">28-year back-alley Shanghainese. Grandma's red-braised pork.</div><div class="l">Off Nanjing Rd</div></div><div class="p">&pound;7-11pp</div></div>
+</div>
+<div class="pick"><div class="pick-hdr">DRINKS - FC</div>
+<div class="act"><div class="t">21:30</div><div><div class="n">Sober Company <span class="c cb">Bar</span></div><div class="d">Asia's 50 Best #81. Cocktail lab + Tipsy lounge upstairs.</div><div class="l">Yongfu Rd, FC</div></div><div class="p">&pound;10-14</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Root Down <span class="c cb">Bar</span></div><div class="d">Low-lit cocktail den. Vinyl records. Perfect slow evening.</div><div class="l">FC</div></div><div class="p">&pound;8-11</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Barber Shop <span class="c cb">Bar</span></div><div class="d">Speakeasy behind actual barber chair.</div><div class="l">FC</div></div><div class="p">&pound;8-11</div></div>
+</div>
+</div>
+
+<!-- DAY 5 -->
+<div class="day-view" id="d5">
+<div class="day-title">Mon Mar 30 - Hotelex Day 1</div>
+<div class="act"><div class="t">09:30</div><div><div class="n">Morning coffee in FC <span class="c cc">Coffee</span></div><div class="d">Manner, Seesaw, or %Arabica near hotel.</div><div class="l">French Concession</div></div><div class="p">&pound;2-5</div></div>
+<div class="act"><div class="t">10:30</div><div><div class="n">Hotelex - NECC <span class="c cx">Conference</span></div><div class="d">Full day. Prioritize: Coffee &amp; Tea, Catering Equipment, Beverage, Brand Franchise.</div><div class="l">国家会展中心</div></div><div class="p"></div></div>
+<div class="act"><div class="t">17:30</div><div><div class="n">Return to FC</div></div><div class="p"></div></div>
+<div class="pick"><div class="pick-hdr">DINNER - FC, pick one</div>
+<div class="act"><div class="t">19:00</div><div><div class="n">O'Mills Firewood Alchemy</div><div class="d">Wood-fired plates, fermentations, natural wine.</div><div class="l">French Concession</div></div><div class="p">&pound;17-28pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">The Merchants</div><div class="d">Ex-Shanghai Film Group building. Modern Chinese.</div><div class="l">French Concession</div></div><div class="p">&pound;22-33pp</div></div>
+</div>
+<div class="pick"><div class="pick-hdr">DRINKS</div>
+<div class="act"><div class="t">21:30</div><div><div class="n">The ROOF at Shanghai EDITION <span class="c cb">Bar</span></div><div class="d">Suspended garden rooftop. Ivy pergolas, open terrace.</div><div class="l">Nanjing Dong Rd</div></div><div class="p">&pound;12-16</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Speak Low <span class="c cb">Bar</span></div><div class="d">Asia's 50 Best speakeasy. 3 floors. <span class="book">BOOK AHEAD</span></div><div class="l">Fuxing Rd, FC</div></div><div class="p">&pound;10-12</div></div>
+</div>
+</div>
+
+<!-- DAY 6 -->
+<div class="day-view" id="d6">
+<div class="day-title">Tue Mar 31 - Hotelex Day 2</div>
+<div class="act"><div class="t">09:30</div><div><div class="n">Morning coffee in FC <span class="c cc">Coffee</span></div><div class="d">Cunkou Dashu, YEAST, or M Stand.</div><div class="l">French Concession</div></div><div class="p">&pound;3-5</div></div>
+<div class="act"><div class="t">10:30</div><div><div class="n">Hotelex - NECC <span class="c cx">Conference</span></div><div class="d">Targeted meetings + demos. Coffee competitions.</div><div class="l">国家会展中心</div></div><div class="p"></div></div>
+<div class="act"><div class="t">17:30</div><div><div class="n">Return to FC</div></div><div class="p"></div></div>
+<div class="pick"><div class="pick-hdr">DINNER - FC, pick one</div>
+<div class="act"><div class="t">19:30</div><div><div class="n">Old Jesse</div><div class="d">3x Dianping Must-Eat. Classic Shanghainese. <span class="book">BOOK AHEAD</span></div><div class="l">Tianping Rd, FC</div></div><div class="p">&pound;11-22pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Jian Guo 328</div><div class="d">Smoked fish, braised pork belly. No-frills.</div><div class="l">Jianguo West Rd</div></div><div class="p">&pound;7-11pp</div></div>
+</div>
+<div class="pick"><div class="pick-hdr">DRINKS - FC</div>
+<div class="act"><div class="t">21:30</div><div><div class="n">Flask <span class="c cb">Bar</span></div><div class="d">Hidden behind Coca-Cola machine. Dark speakeasy.</div><div class="l">Yongfu Rd, FC</div></div><div class="p">&pound;8-11</div></div>
+<div class="act"><div class="t"></div><div><div class="n">PENICILLIN <span class="c cb">Bar</span></div><div class="d">Asia's cocktail master Agung Prabowo. Eco-lab concept.</div><div class="l">FC area</div></div><div class="p">&pound;11-14</div></div>
+</div>
+</div>
+
+<!-- DAY 7 -->
+<div class="day-view" id="d7">
+<div class="day-title">Wed Apr 1 - Hotelex Day 3</div>
+<div class="act"><div class="t">09:30</div><div><div class="n">Morning coffee in FC <span class="c cc">Coffee</span></div><div class="d">Saturnbird, Blue Bottle, or Ollienollie.</div><div class="l">French Concession</div></div><div class="p">&pound;3-6</div></div>
+<div class="act"><div class="t">10:30</div><div><div class="n">Hotelex - NECC <span class="c cx">Conference</span></div><div class="d">Follow-up visits + final walkthrough. Revisit top exhibitors.</div><div class="l">国家会展中心</div></div><div class="p"></div></div>
+<div class="act"><div class="t">17:30</div><div><div class="n">Mahlkonig Dirty <span class="c cc">Coffee</span></div><div class="d">Hot espresso into -80C mason jar (keep it). Cult following.</div><div class="l">Check Dianping (WeChat)</div></div><div class="p">&pound;3-7</div></div>
+<div class="act"><div class="t">18:30</div><div><div class="n">Huaihai Road coffee walk <span class="c cc">Coffee</span></div><div class="d">World's highest density of coffee shops. Dozens in 30 min.</div><div class="l">Huaihai Middle Rd</div></div><div class="p">Free</div></div>
+<div class="pick"><div class="pick-hdr">DINNER - pick one</div>
+<div class="act"><div class="t">19:30</div><div><div class="n">Dashu Restaurant</div><div class="d">Bread curry chicken. Cloud Curtain art space.</div></div><div class="p">&pound;17-28pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">People 6 (secret)</div><div class="d">Scan code to enter. Great value.</div><div class="l">French Concession</div></div><div class="p">&pound;6-14pp</div></div>
+</div>
+<div class="pick"><div class="pick-hdr">DRINKS</div>
+<div class="act"><div class="t">21:30</div><div><div class="n">The Cut Rooftop <span class="c cb">Bar</span></div><div class="d">7th floor IAPM. Neon-lit FC views.</div><div class="l">Huaihai Mid Rd</div></div><div class="p">&pound;10-14</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Epic <span class="c cb">Bar</span></div><div class="d">3-storey cocktail bar. Terrace on top.</div><div class="l">FC</div></div><div class="p">&pound;10-12</div></div>
+</div>
+</div>
+
+<!-- DAY 8 -->
+<div class="day-view" id="d8">
+<div class="day-title">Thu Apr 2 - Hotelex Day 4 (Final)</div>
+<div class="act"><div class="t">09:30</div><div><div class="n">Morning coffee in FC <span class="c cc">Coffee</span></div><div class="d">Metal Hands, Matcha Wang, or Captain George.</div><div class="l">French Concession</div></div><div class="p">&pound;3-6</div></div>
+<div class="act"><div class="t">10:30</div><div><div class="n">Hotelex - NECC (last day) <span class="c cx">Conference</span></div><div class="d">Final meetings. Shows wind down early.</div><div class="l">国家会展中心</div></div><div class="p"></div></div>
+<div class="act"><div class="t">15:00</div><div><div class="n">Nanjing Road pedestrian st. <span class="c cs">Sightseeing</span></div><div class="d">Famous shopping street. Souvenirs.</div></div><div class="p">Free</div></div>
+<div class="act"><div class="t">16:00</div><div><div class="n">Luckin Coffee (Nanjing Rd) <span class="c cc">Coffee</span></div><div class="d">Compare format to Lujiazui flagship.</div></div><div class="p">&pound;1-2</div></div>
+<div class="pick"><div class="pick-hdr">CELEBRATION DINNER - pick one</div>
+<div class="act"><div class="t">19:00</div><div><div class="n">Da Dong Peking Duck</div><div class="d">Michelin 1*. 'Crispy non-fatty duck.' <span class="book">BOOK AHEAD</span></div><div class="l">Xuhui or Bund</div></div><div class="p">&pound;33-55pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Sheng Yong Xing</div><div class="d">Michelin 1*. 45-day ducks, jujube-wood roasted. Bund views. <span class="book">BOOK AHEAD</span></div><div class="l">Five on the Bund</div></div><div class="p">&pound;33-55pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">San Ma Lu Jiu Jia</div><div class="d">Casual. 28-year legend.</div><div class="l">Off Nanjing Rd</div></div><div class="p">&pound;7-11pp</div></div>
+</div>
+<div class="pick"><div class="pick-hdr">CELEBRATION DRINKS</div>
+<div class="act"><div class="t">21:30</div><div><div class="n">Flair Rooftop (Ritz-Carlton) <span class="c cb">Bar</span></div><div class="d">58th floor. Iconic Pudong views.</div><div class="l">IFC, Lujiazui</div></div><div class="p">&pound;12-18</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Sober Company <span class="c cb">Bar</span></div><div class="d">Asia's 50 Best. Tipsy lounge upstairs.</div><div class="l">Yongfu Rd, FC</div></div><div class="p">&pound;10-14</div></div>
+</div>
+</div>
+
+<!-- DAY 9 -->
+<div class="day-view" id="d9">
+<div class="day-title">Fri Apr 3 - Free Day</div>
+<div class="act"><div class="t">10:00</div><div><div class="n">Morning coffee <span class="c cc">Coffee</span></div><div class="d">O.P.S, Captain George, or revisit a favourite.</div><div class="l">French Concession</div></div><div class="p">&pound;3-7</div></div>
+<div class="act"><div class="t">11:00</div><div><div class="n">Cyber Coffee <span class="c ck">Tech</span></div><div class="d">Cyberpunk robot cafe. Sensor doors, 2 robot arms. Drinks from ceiling.</div></div><div class="p">&pound;1-3</div></div>
+<div class="act"><div class="t">11:45</div><div><div class="n">Ollienollie (affogato) <span class="c cc">Coffee</span></div><div class="d">New wave affogato shop. Xiaohongshu hyped.</div></div><div class="p">&pound;3-6</div></div>
+<div class="act"><div class="t">12:30</div><div><div class="n">Power Station of Art <span class="c cs">Sightseeing</span></div><div class="d">Contemporary art in converted power plant. Free.</div><div class="l">Huangpu riverfront</div></div><div class="p">Free</div></div>
+<div class="pick"><div class="pick-hdr">LUNCH - pick one</div>
+<div class="act"><div class="t">13:30</div><div><div class="n">Sheng Xing Dian Xin</div><div class="d">Old-school dim sum. "Full set" - wontons + sesame tangyuan in one bowl.</div></div><div class="p">&pound;2-4pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Xiao Da Dong</div><div class="d">Da Dong's fast-casual duck. Cheap.</div></div><div class="p">&pound;9-17pp</div></div>
+</div>
+<div class="act"><div class="t">15:00</div><div><div class="n">M50 Art District <span class="c cs">Sightseeing</span></div><div class="d">Converted factories. Galleries.</div><div class="l">Putuo</div></div><div class="p">Free</div></div>
+<div class="act"><div class="t">16:30</div><div><div class="n">Revisit favourite cafe <span class="c cc">Coffee</span></div><div class="d">Go back to whichever blew your mind.</div></div><div class="p"></div></div>
+<div class="pick"><div class="pick-hdr">FAREWELL DINNER - pick one</div>
+<div class="act"><div class="t">19:00</div><div><div class="n">Lost Heaven</div><div class="d">Yunnan. Beautiful Bund. End on a high.</div><div class="l">The Bund</div></div><div class="p">&pound;22-39pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">O'Mills Firewood Alchemy</div><div class="d">Casual, wood-fired. Relaxed last night.</div><div class="l">French Concession</div></div><div class="p">&pound;17-28pp</div></div>
+</div>
+<div class="pick"><div class="pick-hdr">LAST NIGHT DRINKS</div>
+<div class="act"><div class="t">21:30</div><div><div class="n">Speak Low <span class="c cb">Bar</span></div><div class="d">End the trip at Asia's best speakeasy. <span class="book">BOOK AHEAD</span></div><div class="l">Fuxing Rd, FC</div></div><div class="p">&pound;10-12</div></div>
+<div class="act"><div class="t"></div><div><div class="n">PENICILLIN <span class="c cb">Bar</span></div><div class="d">Eco-lab cocktails. Unique closer.</div><div class="l">FC area</div></div><div class="p">&pound;11-14</div></div>
+<div class="act"><div class="t"></div><div><div class="n">INS Land (round 2) <span class="c cn">Nightlife</span></div><div class="d">If you want one more big night out.</div><div class="l">Fuxing Park</div></div><div class="p">&pound;32</div></div>
+</div>
+</div>
+
+<!-- DAY 10 -->
+<div class="day-view" id="d10">
+<div class="day-title">Sat Apr 4 - Buffer Day</div>
+<div class="act"><div class="t">10:00</div><div><div class="n">Morning coffee <span class="c cc">Coffee</span></div><div class="d">Last FC coffee. Pick your favourite from the trip.</div><div class="l">French Concession</div></div><div class="p">&pound;3-5</div></div>
+<div class="act"><div class="t">11:00</div><div><div class="n">Jia Jia Tang Bao <span class="c cf">Food</span></div><div class="d">Since 1986. Best xiaolongbao (pork + crab). Always queued. Don't leave Shanghai without it.</div></div><div class="p">&pound;2-6</div></div>
+<div class="act"><div class="t">PM</div><div><div class="n">Flexible</div><div class="d">Pack, shopping, revisit favourites.</div></div><div class="p"></div></div>
+<div class="act"><div class="t">14:00</div><div><div class="n">Optional: Zhujiajiao water town <span class="c cs">Sightseeing</span></div><div class="d">45min. Canals, bridges, traditional food.</div></div><div class="p">~&pound;1</div></div>
+<div class="act"><div class="t">19:00</div><div><div class="n">Early light dinner <span class="c cf">Food</span></div><div class="d">Casual. Early night before flight.</div></div><div class="p"></div></div>
+</div>
+
+<!-- DAY 11 -->
+<div class="day-view" id="d11">
+<div class="day-title">Sun Apr 5 - Departure</div>
+<div class="act"><div class="t">07:00</div><div><div class="n">Depart for PVG <span class="c ct">Travel</span></div><div class="d">Taxi or Maglev. 1.5-2hrs.</div></div><div class="p"></div></div>
+<div class="act"><div class="t">~11:00</div><div><div class="n">BA 168 departs PVG <span class="c ct">Travel</span></div><div class="d">~12hr flight.</div></div><div class="p"></div></div>
+<div class="act"><div class="t">~18:45</div><div><div class="n">Arrive London Heathrow <span class="c ct">Travel</span></div></div><div class="p"></div></div>
+</div>
+
+<script>
+function showDay(n){
+  document.querySelectorAll('.day-view').forEach(d=>d.classList.remove('active'));
+  document.querySelectorAll('.day-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('d'+n).classList.add('active');
+  document.querySelectorAll('.day-btn')[n-1].classList.add('active');
+}
+</script>
+
+</body>
+</html>
