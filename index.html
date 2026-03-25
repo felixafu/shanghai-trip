@@ -297,6 +297,25 @@ h1{font-family:'DM Serif Display',serif;font-size:1.6em;margin-bottom:2px;font-w
 </div>
 
 <script>
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a[href*="maps.apple.com"]');
+  if(!a)return;
+  e.preventDefault();
+  var kw='';
+  try{kw=decodeURIComponent(new URL(a.href).searchParams.get('q')||'');}catch(x){}
+  var ekw=encodeURIComponent(kw);
+  var opened=false;
+  function onHide(){opened=true;document.removeEventListener('visibilitychange',onHide);}
+  document.addEventListener('visibilitychange',onHide);
+  window.location.href='iosamap://search?keyword='+ekw+'&city=上海&dev=0';
+  setTimeout(function(){
+    document.removeEventListener('visibilitychange',onHide);
+    if(!opened&&!document.hidden){
+      window.location.href=a.href;
+    }
+  },2000);
+});
+
 function toggleKeys(){
   var k=document.getElementById('keyinfo'),a=document.getElementById('karrow');
   k.classList.toggle('hidden');a.classList.toggle('open');
