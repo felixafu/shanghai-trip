@@ -19,7 +19,6 @@ h1{font-family:'DM Serif Display',serif;font-size:1.6em;margin-bottom:2px;font-w
 .key .val{font-weight:700;color:#1a1a1a}
 .key .zh{color:#5a5347;font-size:.93em;margin-top:3px}
 .key .det{color:#8a8178;font-size:.84em;margin-top:2px}
-.book{color:#c0392b!important;font-weight:700}
 
 /* Day selector */
 .day-sel{display:flex;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 0 12px;margin-bottom:4px;scrollbar-width:none}
@@ -64,15 +63,22 @@ h1{font-family:'DM Serif Display',serif;font-size:1.6em;margin-bottom:2px;font-w
 
 .note{font-size:.76em;color:#8a8178;margin-bottom:12px}
 
+/* Toggle for key info */
+.keys-toggle{font-size:.76em;color:#8a8178;cursor:pointer;margin-bottom:8px;display:flex;align-items:center;gap:4px;user-select:none}
+.keys-toggle .arrow{transition:transform .2s;display:inline-block}
+.keys-toggle .arrow.open{transform:rotate(90deg)}
+.keys.hidden{display:none}
+
 @media(min-width:500px){body{max-width:520px;padding:24px}}
 </style>
 </head>
 <body>
 
 <h1>Shanghai: Hotelex 2026</h1>
-<p class="sub">Mar 26 - Apr 5 &nbsp;|&nbsp; Blank Street (2-3 pax)</p>
+<p class="sub">Mar 26 - Apr 5 &nbsp;|&nbsp; Carlo, Sarj, Felix</p>
 
-<div class="keys">
+<div class="keys-toggle" onclick="toggleKeys()"><span class="arrow open" id="karrow">&#9656;</span> Hotel &amp; Conference</div>
+<div class="keys" id="keyinfo">
   <div class="key">
     <div class="lbl">Hotel</div>
     <div class="val">Hualuxe Twelve at Hengshan</div>
@@ -85,14 +91,9 @@ h1{font-family:'DM Serif Display',serif;font-size:1.6em;margin-bottom:2px;font-w
     <div class="zh">请到国家会展中心，崧泽大道333号，青浦区</div>
     <div class="det">~1hr from hotel (Line 10 > Line 2)</div>
   </div>
-  <div class="key">
-    <div class="lbl">Flights</div>
-    <div class="val">BA 169 out (Mar 26, 12:15) &nbsp;|&nbsp; BA 168 back (Apr 5, ~11:00)</div>
-    <div class="zh">请到浦东国际机场</div>
-  </div>
 </div>
 
-<p class="note"><span class="book">BOOK AHEAD</span> = needs reservation. Prices in GBP.</p>
+<p class="note">Prices in GBP.</p>
 
 <div class="day-sel" id="daysel">
   <button class="day-btn active" onclick="showDay(1)">Thu 26</button>
@@ -130,12 +131,12 @@ h1{font-family:'DM Serif Display',serif;font-size:1.6em;margin-bottom:2px;font-w
 <div class="act"><div class="t">17:00</div><div><div class="n">Gentle Monster HAUS NOWHERE <span class="c ck">Tech</span></div><div class="d">Eyewear, Tamburins fragrance, Nudake desserts. Future retail. 3,270 sqm.</div><div class="l">798-812 Huaihai Mid Rd</div></div><div class="p">Free</div></div>
 <div class="act"><div class="t">18:00</div><div><div class="n">Nudake dessert cafe <span class="c cf">Food</span></div><div class="d">Gentle Monster's surreal dessert brand. Croissant gym theme.</div><div class="l">Inside HAUS NOWHERE</div></div><div class="p">&pound;4-9</div></div>
 <div class="pick"><div class="pick-hdr">DINNER - FC area, pick one</div>
-<div class="act"><div class="t">19:00</div><div><div class="n">Old Jesse (Lao Ji Shi)</div><div class="d">3x Dianping Must-Eat. Classic Shanghainese. Red-braised pork. <span class="book">BOOK AHEAD</span></div><div class="l">Tianping Rd, FC</div></div><div class="p">&pound;11-22pp</div></div>
+<div class="act"><div class="t">19:00</div><div><div class="n">Old Jesse (Lao Ji Shi)</div><div class="d">3x Dianping Must-Eat. Classic Shanghainese. Red-braised pork.</div><div class="l">Tianping Rd, FC</div></div><div class="p">&pound;11-22pp</div></div>
 <div class="act"><div class="t"></div><div><div class="n">Jian Guo 328</div><div class="d">No-frills Shanghainese legend. Smoked fish. Cash only.</div><div class="l">Jianguo West Rd</div></div><div class="p">&pound;7-11pp</div></div>
 <div class="act"><div class="t"></div><div><div class="n">People 6 (secret)</div><div class="d">Hidden entrance, scan code. Great value set menus.</div><div class="l">French Concession</div></div><div class="p">&pound;6-14pp</div></div>
 </div>
 <div class="pick"><div class="pick-hdr">DRINKS - FC, pick one</div>
-<div class="act"><div class="t">21:30</div><div><div class="n">Speak Low <span class="c cb">Bar</span></div><div class="d">Asia's 50 Best. Speakeasy behind bookshelf. 3 floors. <span class="book">BOOK AHEAD</span></div><div class="l">Fuxing Rd, FC</div></div><div class="p">&pound;10-12</div></div>
+<div class="act"><div class="t">21:30</div><div><div class="n">Speak Low <span class="c cb">Bar</span></div><div class="d">Asia's 50 Best. Speakeasy behind bookshelf. 3 floors.</div><div class="l">Fuxing Rd, FC</div></div><div class="p">&pound;10-12</div></div>
 <div class="act"><div class="t"></div><div><div class="n">Flask <span class="c cb">Bar</span></div><div class="d">Hidden behind a Coca-Cola vending machine. Dark, sleek.</div><div class="l">Yongfu Rd, FC</div></div><div class="p">&pound;8-11</div></div>
 <div class="act"><div class="t"></div><div><div class="n">Epic <span class="c cb">Bar</span></div><div class="d">3-storey cocktail bar. Terrace on top floor.</div><div class="l">FC</div></div><div class="p">&pound;10-12</div></div>
 </div>
@@ -198,7 +199,7 @@ h1{font-family:'DM Serif Display',serif;font-size:1.6em;margin-bottom:2px;font-w
 </div>
 <div class="pick"><div class="pick-hdr">DRINKS</div>
 <div class="act"><div class="t">21:30</div><div><div class="n">The ROOF at Shanghai EDITION <span class="c cb">Bar</span></div><div class="d">Suspended garden rooftop. Ivy pergolas, open terrace.</div><div class="l">Nanjing Dong Rd</div></div><div class="p">&pound;12-16</div></div>
-<div class="act"><div class="t"></div><div><div class="n">Speak Low <span class="c cb">Bar</span></div><div class="d">Asia's 50 Best speakeasy. 3 floors. <span class="book">BOOK AHEAD</span></div><div class="l">Fuxing Rd, FC</div></div><div class="p">&pound;10-12</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Speak Low <span class="c cb">Bar</span></div><div class="d">Asia's 50 Best speakeasy. 3 floors.</div><div class="l">Fuxing Rd, FC</div></div><div class="p">&pound;10-12</div></div>
 </div>
 </div>
 
@@ -209,7 +210,7 @@ h1{font-family:'DM Serif Display',serif;font-size:1.6em;margin-bottom:2px;font-w
 <div class="act"><div class="t">10:30</div><div><div class="n">Hotelex - NECC <span class="c cx">Conference</span></div><div class="d">Targeted meetings + demos. Coffee competitions.</div><div class="l">国家会展中心</div></div><div class="p"></div></div>
 <div class="act"><div class="t">17:30</div><div><div class="n">Return to FC</div></div><div class="p"></div></div>
 <div class="pick"><div class="pick-hdr">DINNER - FC, pick one</div>
-<div class="act"><div class="t">19:30</div><div><div class="n">Old Jesse</div><div class="d">3x Dianping Must-Eat. Classic Shanghainese. <span class="book">BOOK AHEAD</span></div><div class="l">Tianping Rd, FC</div></div><div class="p">&pound;11-22pp</div></div>
+<div class="act"><div class="t">19:30</div><div><div class="n">Old Jesse</div><div class="d">3x Dianping Must-Eat. Classic Shanghainese.</div><div class="l">Tianping Rd, FC</div></div><div class="p">&pound;11-22pp</div></div>
 <div class="act"><div class="t"></div><div><div class="n">Jian Guo 328</div><div class="d">Smoked fish, braised pork belly. No-frills.</div><div class="l">Jianguo West Rd</div></div><div class="p">&pound;7-11pp</div></div>
 </div>
 <div class="pick"><div class="pick-hdr">DRINKS - FC</div>
@@ -243,8 +244,8 @@ h1{font-family:'DM Serif Display',serif;font-size:1.6em;margin-bottom:2px;font-w
 <div class="act"><div class="t">15:00</div><div><div class="n">Nanjing Road pedestrian st. <span class="c cs">Sightseeing</span></div><div class="d">Famous shopping street. Souvenirs.</div></div><div class="p">Free</div></div>
 <div class="act"><div class="t">16:00</div><div><div class="n">Luckin Coffee (Nanjing Rd) <span class="c cc">Coffee</span></div><div class="d">Compare format to Lujiazui flagship.</div></div><div class="p">&pound;1-2</div></div>
 <div class="pick"><div class="pick-hdr">CELEBRATION DINNER - pick one</div>
-<div class="act"><div class="t">19:00</div><div><div class="n">Da Dong Peking Duck</div><div class="d">Michelin 1*. 'Crispy non-fatty duck.' <span class="book">BOOK AHEAD</span></div><div class="l">Xuhui or Bund</div></div><div class="p">&pound;33-55pp</div></div>
-<div class="act"><div class="t"></div><div><div class="n">Sheng Yong Xing</div><div class="d">Michelin 1*. 45-day ducks, jujube-wood roasted. Bund views. <span class="book">BOOK AHEAD</span></div><div class="l">Five on the Bund</div></div><div class="p">&pound;33-55pp</div></div>
+<div class="act"><div class="t">19:00</div><div><div class="n">Da Dong Peking Duck</div><div class="d">Michelin 1*. 'Crispy non-fatty duck.'</div><div class="l">Xuhui or Bund</div></div><div class="p">&pound;33-55pp</div></div>
+<div class="act"><div class="t"></div><div><div class="n">Sheng Yong Xing</div><div class="d">Michelin 1*. 45-day ducks, jujube-wood roasted. Bund views.</div><div class="l">Five on the Bund</div></div><div class="p">&pound;33-55pp</div></div>
 <div class="act"><div class="t"></div><div><div class="n">San Ma Lu Jiu Jia</div><div class="d">Casual. 28-year legend.</div><div class="l">Off Nanjing Rd</div></div><div class="p">&pound;7-11pp</div></div>
 </div>
 <div class="pick"><div class="pick-hdr">CELEBRATION DRINKS</div>
@@ -271,7 +272,7 @@ h1{font-family:'DM Serif Display',serif;font-size:1.6em;margin-bottom:2px;font-w
 <div class="act"><div class="t"></div><div><div class="n">O'Mills Firewood Alchemy</div><div class="d">Casual, wood-fired. Relaxed last night.</div><div class="l">French Concession</div></div><div class="p">&pound;17-28pp</div></div>
 </div>
 <div class="pick"><div class="pick-hdr">LAST NIGHT DRINKS</div>
-<div class="act"><div class="t">21:30</div><div><div class="n">Speak Low <span class="c cb">Bar</span></div><div class="d">End the trip at Asia's best speakeasy. <span class="book">BOOK AHEAD</span></div><div class="l">Fuxing Rd, FC</div></div><div class="p">&pound;10-12</div></div>
+<div class="act"><div class="t">21:30</div><div><div class="n">Speak Low <span class="c cb">Bar</span></div><div class="d">End the trip at Asia's best speakeasy.</div><div class="l">Fuxing Rd, FC</div></div><div class="p">&pound;10-12</div></div>
 <div class="act"><div class="t"></div><div><div class="n">PENICILLIN <span class="c cb">Bar</span></div><div class="d">Eco-lab cocktails. Unique closer.</div><div class="l">FC area</div></div><div class="p">&pound;11-14</div></div>
 <div class="act"><div class="t"></div><div><div class="n">INS Land (round 2) <span class="c cn">Nightlife</span></div><div class="d">If you want one more big night out.</div><div class="l">Fuxing Park</div></div><div class="p">&pound;32</div></div>
 </div>
@@ -296,6 +297,10 @@ h1{font-family:'DM Serif Display',serif;font-size:1.6em;margin-bottom:2px;font-w
 </div>
 
 <script>
+function toggleKeys(){
+  var k=document.getElementById('keyinfo'),a=document.getElementById('karrow');
+  k.classList.toggle('hidden');a.classList.toggle('open');
+}
 function showDay(n){
   document.querySelectorAll('.day-view').forEach(d=>d.classList.remove('active'));
   document.querySelectorAll('.day-btn').forEach(b=>b.classList.remove('active'));
