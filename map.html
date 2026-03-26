@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shanghai Trip - Route Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,sans-serif}
+#map{width:100%;height:100vh}
+.legend{position:absolute;bottom:20px;left:10px;background:#fff;padding:12px 16px;border-radius:10px;z-index:1000;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.15);max-height:50vh;overflow-y:auto}
+.legend h3{margin-bottom:8px;font-size:14px}
+.legend .item{display:flex;align-items:center;gap:6px;margin:4px 0;cursor:pointer}
+.legend .dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.legend .item.dim .dot{opacity:.3}
+.legend .item.dim span{opacity:.3}
+.day-toggle{position:absolute;top:10px;left:50px;z-index:1000;display:flex;gap:4px;flex-wrap:wrap;max-width:calc(100% - 60px)}
+.day-toggle button{background:#fff;border:2px solid #ccc;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer}
+.day-toggle button.active{color:#fff}
+</style>
+</head>
+<body>
+<div class="day-toggle" id="toggles"></div>
+<div id="map"></div>
+<div class="legend" id="legend"></div>
+
+<script>
+var dayColors = {
+  2: '#e63946', // red
+  3: '#457b9d', // blue
+  4: '#2a9d8f', // teal
+  5: '#9b59b6', // purple
+  6: '#9b59b6',
+  7: '#9b59b6',
+  8: '#e67e22'  // orange
+};
+
+var catIcons = {
+  coffee: '☕', food: '🍜', sightseeing: '👁', bar: '🍸', tech: '⚡'
+};
+
+var venues = [
+  // DAY 2
+  {day:2,time:'10:00',name:'Hualuxe Hotel',lat:31.2078,lng:121.4445,cat:'sightseeing'},
+  {day:2,time:'10:30',name:'O.P.S Cafe',lat:31.2100,lng:121.4500,cat:'coffee'},
+  {day:2,time:'11:00',name:'Dong Tai Xiang',lat:31.2120,lng:121.4540,cat:'food'},
+  {day:2,time:'11:30',name:'Starbucks Roastery',lat:31.2290,lng:121.4520,cat:'coffee'},
+  {day:2,time:'12:30',name:'Heytea Lab 2.0',lat:31.2280,lng:121.4510,cat:'tech'},
+  {day:2,time:'14:00',name:'%Arabica Wukang',lat:31.2095,lng:121.4385,cat:'coffee'},
+  {day:2,time:'14:15',name:'Wukang + Anfu Walk',lat:31.2105,lng:121.4383,cat:'sightseeing'},
+  {day:2,time:'14:45',name:'Saturnbird',lat:31.2115,lng:121.4380,cat:'coffee'},
+  {day:2,time:'15:15',name:'Manner Coffee',lat:31.2095,lng:121.4388,cat:'coffee'},
+  {day:2,time:'16:00',name:'HAUS NOWHERE',lat:31.2180,lng:121.4580,cat:'tech'},
+  {day:2,time:'17:30',name:'Nudake',lat:31.2180,lng:121.4582,cat:'food'},
+  {day:2,time:'19:00',name:'Old Jesse',lat:31.2060,lng:121.4380,cat:'food'},
+  {day:2,time:'19:00',name:'Jian Guo 328',lat:31.2100,lng:121.4480,cat:'food'},
+  {day:2,time:'21:30',name:'Speak Low',lat:31.2140,lng:121.4530,cat:'bar'},
+  {day:2,time:'21:30',name:'Flask',lat:31.2100,lng:121.4400,cat:'bar'},
+
+  // DAY 3
+  {day:3,time:'10:00',name:'Seesaw Coffee',lat:31.2090,lng:121.4445,cat:'coffee'},
+  {day:3,time:'10:45',name:'M Stand',lat:31.2100,lng:121.4480,cat:'coffee'},
+  {day:3,time:'11:30',name:'Blue Bottle Coffee',lat:31.2270,lng:121.4560,cat:'coffee'},
+  {day:3,time:'12:00',name:'COFE+ Robot',lat:31.2350,lng:121.4750,cat:'tech'},
+  {day:3,time:'12:30',name:'Lai Lai Xiao Long',lat:31.2350,lng:121.4752,cat:'food'},
+  {day:3,time:'14:30',name:'The Bund Walk',lat:31.2400,lng:121.4900,cat:'sightseeing'},
+  {day:3,time:'15:00',name:'Manner (Oriental Pearl)',lat:31.2397,lng:121.4995,cat:'coffee'},
+  {day:3,time:'15:30',name:'Luckin (Lujiazui)',lat:31.2360,lng:121.5000,cat:'coffee'},
+  {day:3,time:'16:30',name:'Shanghai Tower',lat:31.2355,lng:121.5016,cat:'sightseeing'},
+  {day:3,time:'18:30',name:'Lost Heaven (Bund)',lat:31.2408,lng:121.4895,cat:'food'},
+  {day:3,time:'22:30',name:'INS Land',lat:31.2155,lng:121.4560,cat:'bar'},
+
+  // DAY 4
+  {day:4,time:'11:30',name:'Cunkou Dashu/YEAST',lat:31.2090,lng:121.4450,cat:'coffee'},
+  {day:4,time:'12:15',name:'Captain George',lat:31.2100,lng:121.4500,cat:'coffee'},
+  {day:4,time:'13:00',name:'Erguang Huntun',lat:31.2155,lng:121.4560,cat:'food'},
+  {day:4,time:'14:00',name:'Yu Garden',lat:31.2270,lng:121.4920,cat:'sightseeing'},
+  {day:4,time:'14:45',name:'Ningbo Tangyuan',lat:31.2280,lng:121.4922,cat:'food'},
+  {day:4,time:'15:30',name:'Yuyuan Bazaar',lat:31.2278,lng:121.4918,cat:'food'},
+  {day:4,time:'16:15',name:'Metal Hands Coffee',lat:31.2155,lng:121.4560,cat:'coffee'},
+  {day:4,time:'17:00',name:'Tianzifang',lat:31.2080,lng:121.4680,cat:'sightseeing'},
+  {day:4,time:'17:30',name:'Matcha Wang',lat:31.2200,lng:121.4600,cat:'coffee'},
+  {day:4,time:'21:30',name:'Sober Company',lat:31.2100,lng:121.4400,cat:'bar'},
+
+  // DAY 5-7 key
+  {day:5,time:'19:00',name:"O'Mills",lat:31.2130,lng:121.4430,cat:'food'},
+  {day:5,time:'21:30',name:'ROOF at EDITION',lat:31.2370,lng:121.4800,cat:'bar'},
+  {day:7,time:'17:30',name:'Mahlkonig Dirty',lat:31.2200,lng:121.4600,cat:'coffee'},
+  {day:7,time:'18:30',name:'Huaihai Coffee Walk',lat:31.2200,lng:121.4600,cat:'coffee'},
+  {day:7,time:'21:30',name:'The Cut (IAPM)',lat:31.2190,lng:121.4565,cat:'bar'},
+
+  // DAY 8 celebration
+  {day:8,time:'19:00',name:'Da Dong',lat:31.2200,lng:121.4550,cat:'food'},
+  {day:8,time:'19:00',name:'Sheng Yong Xing',lat:31.2420,lng:121.4880,cat:'food'},
+  {day:8,time:'21:30',name:'Flair (Ritz IFC)',lat:31.2380,lng:121.5050,cat:'bar'},
+];
+
+var map = L.map('map').setView([31.2200, 121.4600], 14);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  attribution:'OpenStreetMap',maxZoom:18
+}).addTo(map);
+
+var dayLayers = {};
+var dayLines = {};
+var activeDays = new Set([2,3,4]);
+
+// Create markers and route lines per day
+var days = [2,3,4,5,6,7,8];
+days.forEach(function(d){
+  dayLayers[d] = L.layerGroup();
+  var dayVenues = venues.filter(function(v){return v.day===d});
+  var coords = [];
+  dayVenues.forEach(function(v){
+    var color = dayColors[v.day] || '#666';
+    var icon = L.divIcon({
+      className:'',
+      html:'<div style="background:'+color+';color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3)">'+catIcons[v.cat]+'</div>',
+      iconSize:[28,28],iconAnchor:[14,14]
+    });
+    var marker = L.marker([v.lat,v.lng],{icon:icon})
+      .bindPopup('<b>Day '+v.day+' '+v.time+'</b><br>'+v.name+'<br><i>'+v.cat+'</i>');
+    dayLayers[d].addLayer(marker);
+    coords.push([v.lat,v.lng]);
+  });
+  dayLines[d] = L.polyline(coords,{color:dayColors[d]||'#666',weight:3,opacity:0.6,dashArray:'8,6'});
+  dayLayers[d].addLayer(dayLines[d]);
+  if(activeDays.has(d)) dayLayers[d].addTo(map);
+});
+
+// Day toggle buttons
+var toggleDiv = document.getElementById('toggles');
+days.forEach(function(d){
+  var btn = document.createElement('button');
+  var labels = {2:'Day 2 Fri',3:'Day 3 Sat',4:'Day 4 Sun',5:'Day 5 Mon',6:'Day 6 Tue',7:'Day 7 Wed',8:'Day 8 Thu'};
+  btn.textContent = labels[d];
+  btn.style.borderColor = dayColors[d]||'#666';
+  if(activeDays.has(d)){
+    btn.classList.add('active');
+    btn.style.background = dayColors[d];
+    btn.style.color = '#fff';
+  }
+  btn.onclick = function(){
+    if(activeDays.has(d)){
+      activeDays.delete(d);
+      map.removeLayer(dayLayers[d]);
+      btn.classList.remove('active');
+      btn.style.background = '#fff';
+      btn.style.color = '#333';
+    } else {
+      activeDays.add(d);
+      dayLayers[d].addTo(map);
+      btn.classList.add('active');
+      btn.style.background = dayColors[d];
+      btn.style.color = '#fff';
+    }
+  };
+  toggleDiv.appendChild(btn);
+});
+
+// Legend
+var legendDiv = document.getElementById('legend');
+legendDiv.innerHTML = '<h3>Categories</h3>';
+Object.keys(catIcons).forEach(function(c){
+  legendDiv.innerHTML += '<div class="item"><span>'+catIcons[c]+'</span> <span>'+c+'</span></div>';
+});
+legendDiv.innerHTML += '<h3 style="margin-top:8px">Route issues</h3>';
+legendDiv.innerHTML += '<div style="font-size:11px;color:#666;max-width:160px">Dashed lines show route order. Look for long jumps or backtracking.</div>';
+</script>
+</body>
+</html>
